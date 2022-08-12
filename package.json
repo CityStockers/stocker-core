@@ -1,0 +1,25 @@
+{
+    "name": "stocker-core",
+    "version": "1.0.1",
+    "description": "Data schema and types for Stocker DB(mongoDB)",
+    "scripts": {
+        "build": "npx tsc",
+        "dev": "nodemon --exec \"npx ts-node test.ts\" -e ts --watch test.ts"
+    },
+    "author": "CityStockers",
+    "license": "MIT",
+    "devDependencies": {
+        "tsc": "^2.0.4",
+        "typescript": "^4.7.4"
+    },
+    "keywords": [],
+    "files": [
+        "dist"
+    ],
+    "dependencies": {
+        "@types/dotenv": "^8.2.0",
+        "@types/pg": "^8.6.5",
+        "dotenv": "^16.0.1",
+        "pg": "^8.7.3"
+    }
+}
