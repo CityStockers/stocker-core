@@ -1,29 +1,29 @@
 {
-    "name": "stocker-core",
-    "version": "1.0.1",
-    "description": "DB model and Data Types.",
-    "scripts": {
-        "prebuild": "rm -rf dist",
-        "build": "npx tsc",
-        "dev": "nodemon --exec \"npx ts-node test.ts\" -e ts --watch test.ts"
-    },
-    "main": "dist/index.js",
-    "author": "CityStockers",
-    "license": "MIT",
-    "devDependencies": {
-        "tsc": "^2.0.4",
-        "typescript": "^4.7.4"
-    },
-    "keywords": [],
-    "files": [
-        "dist"
-    ],
-    "dependencies": {
-        "@types/dotenv": "^8.2.0",
-        "@types/pg": "^8.6.5",
-        "axios": "^0.27.2",
-        "dotenv": "^16.0.1",
-        "pg": "^8.7.3",
-        "stocker-core": "github:CityStockers/stocker-core"
-    }
+  "name": "stocker-core",
+  "version": "1.0.1",
+  "description": "DB model and Data Types.",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "npx tsc",
+    "dev": "nodemon --exec \"npx ts-node test.ts\" -e ts --watch test.ts"
+  },
+  "main": "dist/index.js",
+  "author": "CityStockers",
+  "license": "MIT",
+  "devDependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^4.7.4"
+  },
+  "keywords": [],
+  "files": [
+    "types"
+  ],
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/pg": "^8.6.5",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "pg": "^8.7.3",
+    "stocker-core": "github:CityStockers/stocker-core"
+  }
 }
