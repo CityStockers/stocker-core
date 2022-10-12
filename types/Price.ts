@@ -1,4 +1,4 @@
-export type Quote = {
+export type Price = {
   symbol: string;
   price: number;
   timestamp: number;
