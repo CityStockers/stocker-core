@@ -1,6 +1,6 @@
 export type Price = {
-  symbol: string;
   price: number;
+  symbol: string;
   timestamp: number;
-  name: string;
+  currency: string;
 };
