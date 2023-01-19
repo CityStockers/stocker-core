@@ -17,5 +17,10 @@
   "keywords": [],
   "files": [
     "types"
-  ]
+  ],
+  "dependencies": {
+    "@types/react": "^18.0.27",
+    "firebase-admin": "^11.4.1",
+    "react": "^18.2.0"
+  }
 }

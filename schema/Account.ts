@@ -1,20 +1,24 @@
 export type Account = {
-  wallets: Wallet;
+  wallets: Wallet[];
   user_id: string;
 };
 
 export type Wallet = {
-  type: CurrencyType;
-  currency: string; // USD, BTCUSDT, AAPL
+  currency: Currency;
   amount: number;
-  histories: Purchase[];
+  histories: Transaction[];
 };
 
-export type Purchase = {
-  type: CurrencyType;
-  currency: string;
+export type Transaction = {
+  currency: Currency;
   amount: number;
   timestamp: number; // Date.getTime()
 };
 
-export type CurrencyType = "CASH" | "CRYPTO" | "STOCK";
+export type Currency = {
+  type: "CASH" | "CRYPTO" | "STOCK";
+  ticker: string; // USD, BTCUSDT, AAPL, TSLA
+  name: string; // Dollar, Bitcoin-Dollar, Apple Inc, Tesla
+};
+
+export default Account;
