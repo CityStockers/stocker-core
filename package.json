@@ -5,7 +5,8 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "npx tsc",
-    "dev": "nodemon --exec \"npx ts-node test.ts\" -e ts --watch test.ts"
+    "dev": "nodemon --exec \"npx ts-node test.ts\" -e ts --watch test.ts",
+    "deploy-rules": "firebase deploy --only firestore:rules"
   },
   "main": "dist/index.js",
   "author": "CityStockers",
