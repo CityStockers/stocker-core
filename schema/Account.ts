@@ -1,4 +1,4 @@
-import { Firestore } from "firebase-admin/firestore";
+import { Firestore } from "firebase/firestore";
 import { COLLECTION_NAMES, genHook } from "./genHook";
 
 export async function useAccount(db: Firestore, userId: string) {
