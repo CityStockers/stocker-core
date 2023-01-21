@@ -1,18 +1,16 @@
 import { Firestore } from "firebase-admin/firestore";
 import { useState } from "react";
-import Account from "./Account";
-const ACCOUNT_COLLECTION_NAME = "Accounts";
 
-export async function useAccount(db: Firestore, id: string) {
-  return generateHook<Account>()(db, id);
-}
+export const COLLECTION_NAMES = {
+  ACCOUNT: "Accounts",
+};
 
-export function generateHook<T>() {
+export function genHook<T>() {
   return async function (db: Firestore, id: string) {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [data, setData] = useState<T | null>(null);
-    db.collection(ACCOUNT_COLLECTION_NAME)
+    db.collection(COLLECTION_NAMES.ACCOUNT)
       .doc(id)
       .onSnapshot(
         (snapshot) => {
