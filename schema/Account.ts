@@ -5,15 +5,15 @@ export async function useAccount(db: Firestore, userId: string) {
   return genHook<Account>()(db, userId);
 }
 
-export async function createAccount(db: Firestore, userId: string) {
-  const snapshot = await db
-    .collection(COLLECTION_NAMES.ACCOUNT)
-    .where("userId", "==", userId).
-    .get();
-    if(snapshot.empty) {
-        throw new Error(`Cannot find document in collection ${"Accounts"} with query `)
-    }
-}
+// export async function createAccount(db: Firestore, userId: string) {
+//   const snapshot = await db
+//     .collection(COLLECTION_NAMES.ACCOUNT)
+//     .where("userId", "==", userId).
+//     .get();
+//     if(snapshot.empty) {
+//         throw new Error(`Cannot find document in collection ${"Accounts"} with query `)
+//     }
+// }
 
 export type Account = {
   wallets: Wallet[];
