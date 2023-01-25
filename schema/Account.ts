@@ -1,7 +1,12 @@
-import { Firestore } from "firebase/firestore";
-import { COLLECTION_NAMES, genHook } from "./genHook";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import { genHook } from "./genHook";
 
-export async function useAccount(db: Firestore, userId: string) {
+firebase.firestore.Firestore;
+export async function useAccount(
+  db: firebase.firestore.Firestore,
+  userId: string
+) {
   return genHook<Account>()(db, userId);
 }
 
