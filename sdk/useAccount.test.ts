@@ -1,7 +1,6 @@
 import fs from "fs";
 import { renderHook } from "@testing-library/react-hooks";
 import { useAccount } from "./useAccount";
-import { genNewAccount } from "../schema/Account";
 import { COLLECTION_NAMES } from "./genHook";
 import {
   assertFails,
@@ -9,6 +8,8 @@ import {
   initializeTestEnvironment,
   RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
+import { genNewAccount } from "./Account";
+import Account from "../schema/Account";
 
 const FIRESTORE_RULES = fs.readFileSync("./firestore.rules", "utf8");
 
@@ -17,13 +18,17 @@ describe("useAccount", () => {
 
   beforeAll(async () => {
     testEnv = await initializeTestEnvironment({
-      projectId: "stocker-c11e2",
+      projectId: "stocker-test",
       firestore: { rules: FIRESTORE_RULES },
     });
   });
 
-  beforeEach(() => {
-    testEnv.clearFirestore();
+  afterEach(async () => {
+    await testEnv.clearFirestore();
+  });
+
+  afterAll(async () => {
+    await testEnv.cleanup();
   });
 
   test("with unathenticated user", async () => {
@@ -49,15 +54,15 @@ describe("useAccount", () => {
     );
 
     // Initial state check
-    expect((await result.current).loading).toBe(true);
-    expect((await result.current).account).toBe(null);
-    expect((await result.current).error).toBe(null);
+    expect(result.current.loading).toBe(true);
+    expect(result.current.account).toBe(null);
+    expect(result.current.error).toBe(null);
 
     // state check after first update
     await waitForNextUpdate();
-    expect((await result.current).loading).toBe(false);
-    expect((await result.current).account).toStrictEqual(null);
-    expect((await result.current).error).not.toBe(null); // Auth Error must exists
+    expect(result.current.loading).toBe(false);
+    expect(result.current.account).toBe(null);
+    expect(result.current.error).not.toBe(null); // Auth Error must exists
   });
 
   test("with athenticated user", async () => {
@@ -89,17 +94,19 @@ describe("useAccount", () => {
     );
 
     // Initial state check
-    expect((await result.current).loading).toBe(true);
-    expect((await result.current).account).toBe(null);
-    expect((await result.current).error).toBe(null);
+    expect(result.current.loading).toBe(true);
+    expect(result.current.account).toBe(null);
+    expect(result.current.error).toBe(null);
+
+    await waitForNextUpdate();
 
     // state check after first update
-    await waitForNextUpdate();
-    expect((await result.current).loading).toBe(false);
-    expect((await result.current).account).toStrictEqual({
+    expect(result.current.loading).toBe(false);
+    const expectedAccount: Account = {
       userID: "userid_123",
       wallets: [],
-    });
-    expect((await result.current).error).toBe(null); // Auth Error must exists
+    };
+    expect(result.current.account).toStrictEqual(expectedAccount);
+    expect(result.current.error).toBe(null); // Auth Error must exists
   });
 });

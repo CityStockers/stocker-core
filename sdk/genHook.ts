@@ -1,6 +1,6 @@
 import firebase from "firebase/compat/app";
 import { DocumentData } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const COLLECTION_NAMES = {
   ACCOUNTS: "accounts",
@@ -12,22 +12,25 @@ export function genHook<T = DocumentData>(collectionName: string) {
     const [error, setError] = useState<Error | null>(null);
     const [data, setData] = useState<T | null>(null);
 
-    db.collection(collectionName)
-      .doc(id)
-      .onSnapshot(
-        (snapshot) => {
-          const fsDocData = snapshot.data();
-          console.log(fsDocData);
-          setData(fsDocData ? (fsDocData as T) : null);
-          setError(null);
-          setLoading(false);
-        },
-        (error) => {
-          setError(error);
-          setData(null);
-          setLoading(false);
-        }
-      );
+    useEffect(() => {
+      const unsubscribe = db
+        .collection(collectionName)
+        .doc(id)
+        .onSnapshot(
+          (snapshot) => {
+            const fsDocData = snapshot.data();
+            setData(fsDocData ? (fsDocData as T) : null);
+            setError(null);
+            setLoading(false);
+          },
+          (error) => {
+            setError(error);
+            setData(null);
+            setLoading(false);
+          }
+        );
+      return unsubscribe;
+    }, []);
     return { data, loading, error };
   };
 }
