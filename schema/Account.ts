@@ -1,28 +1,13 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import { genHook } from "./genHook";
-
-firebase.firestore.Firestore;
-export async function useAccount(
-  db: firebase.firestore.Firestore,
-  userId: string
-) {
-  return genHook<Account>()(db, userId);
+export function genNewAccount(userID: string): Account {
+  return {
+    userID: userID,
+    wallets: [],
+  };
 }
-
-// export async function createAccount(db: Firestore, userId: string) {
-//   const snapshot = await db
-//     .collection(COLLECTION_NAMES.ACCOUNT)
-//     .where("userId", "==", userId).
-//     .get();
-//     if(snapshot.empty) {
-//         throw new Error(`Cannot find document in collection ${"Accounts"} with query `)
-//     }
-// }
 
 export type Account = {
   wallets: Wallet[];
-  userId: string;
+  userID: string;
 };
 
 export type Wallet = {
