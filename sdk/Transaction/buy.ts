@@ -1,8 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import { useEffect, useState } from "react";
 import { COLLECTION_NAMES } from "../Constants";
-import { Account } from "../Types/Account";
 import { History, Transaction } from "../Types/History";
 
 function newHistory(userID: string): History {
@@ -31,7 +29,7 @@ async function buy(
     symbol: symbol,
     type: "BUY",
     amount: amount,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(), // TODO: DANGER
+    timestamp: new Date().getUTCMilliseconds(),
   };
 
   docRef.ref.update({
