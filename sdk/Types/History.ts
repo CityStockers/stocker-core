@@ -9,7 +9,7 @@ export type Transaction = {
   symbol: string;
   type: TransactionType;
   amount: number;
-  timestamp: firebase.firestore.FieldValue; // Date.getTime()
+  timestamp: number;
 };
 
 export type TransactionType = "BUY" | "SELL";
