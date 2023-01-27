@@ -1,0 +1,20 @@
+[
+  {
+    "currencyType": "USD",
+    "name": "Dollar",
+    "providerKey": "STOCKER",
+    "providerSymbol": "USD"
+  },
+  {
+    "currencyType": "BTC",
+    "name": "Bitcoin",
+    "providerKey": "BINANCE",
+    "providerSymbol": "BTCUSDT"
+  },
+  {
+    "currencyType": "ETH",
+    "name": "Etherium",
+    "providerKey": "BINANCE",
+    "providerSymbol": "ETHUSDT"
+  }
+]
