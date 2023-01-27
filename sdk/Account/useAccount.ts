@@ -3,7 +3,7 @@ import "firebase/compat/firestore";
 import { useEffect, useState } from "react";
 import { COLLECTION_NAMES } from "../Constants";
 import { Account } from "../Types/Account";
-import genNewAccount from "./genNewAccount";
+import { newAccount } from "./newAccount";
 
 function useAccount(db: firebase.firestore.Firestore, userID: string) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,7 +23,7 @@ function useAccount(db: firebase.firestore.Firestore, userID: string) {
             setLoading(false);
           } else {
             // Create new account when there is no account.
-            snapshot.ref.set(genNewAccount(userID));
+            snapshot.ref.set(newAccount(userID));
           }
         },
         (error) => {

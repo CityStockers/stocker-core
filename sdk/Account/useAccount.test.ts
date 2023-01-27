@@ -1,4 +1,3 @@
-import fs from "fs";
 import { renderHook } from "@testing-library/react-hooks";
 import {
   assertFails,
@@ -8,10 +7,11 @@ import {
 } from "@firebase/rules-unit-testing";
 import { COLLECTION_NAMES } from "../Constants";
 import { Account } from "../Types/Account";
-import genNewAccount from "./genNewAccount";
 import useAccount from "./useAccount";
+import { newAccount } from "./newAccount";
+import { getFirestoreRules } from "../Utils/getFirestoreRules";
 
-const FIRESTORE_RULES = fs.readFileSync("./firestore.rules", "utf8");
+const FIRESTORE_RULES = getFirestoreRules();
 
 describe("useAccount", () => {
   let testEnv: RulesTestEnvironment;
@@ -42,7 +42,7 @@ describe("useAccount", () => {
       await db
         .collection(COLLECTION_NAMES.ACCOUNTS)
         .doc("userid_123")
-        .set(genNewAccount("userid_123"));
+        .set(newAccount("userid_123"));
     });
 
     // must fail when trying to fetch account data(because it is unathenticated)
@@ -74,7 +74,7 @@ describe("useAccount", () => {
     // initial firestore setup. add account document.
     await testEnv.withSecurityRulesDisabled(async (context) => {
       const db = context.firestore();
-      const account = genNewAccount("userid_123");
+      const account = newAccount("userid_123");
 
       // set existing account to have 10 USD
       account.wallets[0].amount = 10;

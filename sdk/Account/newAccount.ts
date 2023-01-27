@@ -1,6 +1,6 @@
 import { Account } from "../Types/Account";
 
-function genNewAccount(userID: string): Account {
+export function newAccount(userID: string): Account {
   return {
     userID: userID,
     wallets: [
@@ -11,5 +11,3 @@ function genNewAccount(userID: string): Account {
     ],
   };
 }
-
-export default genNewAccount;

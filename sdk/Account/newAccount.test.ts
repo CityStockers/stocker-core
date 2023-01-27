@@ -1,7 +1,7 @@
 import { Account } from "../Types/Account";
-import genNewAccount from "./genNewAccount";
+import { newAccount } from "./newAccount";
 
-describe("genNewAccount", () => {
+describe("newAccount", () => {
   test("must return account object", () => {
     const account: Account = {
       userID: "user123",
@@ -12,6 +12,6 @@ describe("genNewAccount", () => {
         },
       ],
     };
-    expect(genNewAccount("user123")).toStrictEqual(account);
+    expect(newAccount("user123")).toStrictEqual(account);
   });
 });
