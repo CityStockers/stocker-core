@@ -9,6 +9,7 @@ export type Transaction = {
   symbol: string;
   type: TransactionType;
   amount: number;
+  price: number;
   timestamp: number;
 };
 

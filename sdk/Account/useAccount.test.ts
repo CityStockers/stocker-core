@@ -77,7 +77,7 @@ describe("useAccount", () => {
       const account = newAccount("userid_123");
 
       // set existing account to have 10 USD
-      account.wallets[0].amount = 10;
+      account.wallets[0].avgPrice = 1000;
       await db
         .collection(COLLECTION_NAMES.ACCOUNTS)
         .doc("userid_123")
@@ -107,7 +107,8 @@ describe("useAccount", () => {
       wallets: [
         {
           symbol: "USD",
-          amount: 10,
+          amount: 1,
+          avgPrice: 1000,
         },
       ],
     };
@@ -143,7 +144,8 @@ describe("useAccount", () => {
       wallets: [
         {
           symbol: "USD",
-          amount: 0,
+          amount: 1,
+          avgPrice: 0,
         },
       ],
     };

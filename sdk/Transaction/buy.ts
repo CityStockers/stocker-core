@@ -14,7 +14,8 @@ async function buy(
   db: firebase.firestore.Firestore,
   userID: string,
   symbol: string,
-  amount: number
+  amount: number,
+  price: number
 ) {
   const historiesRef = db.collection(
     COLLECTION_NAMES.HISTORIES
@@ -29,6 +30,7 @@ async function buy(
     symbol: symbol,
     type: "BUY",
     amount: amount,
+    price: price,
     timestamp: new Date().getUTCMilliseconds(),
   };
 

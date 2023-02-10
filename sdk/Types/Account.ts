@@ -6,4 +6,5 @@ export type Account = {
 export type Wallet = {
   symbol: string;
   amount: number;
+  avgPrice: number;
 };
