@@ -13,4 +13,4 @@ export type Transaction = {
   timestamp: number;
 };
 
-export type TransactionType = "BUY" | "SELL";
+export type TransactionType = "BUY" | "SELL" | "ADD";
