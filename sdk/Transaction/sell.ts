@@ -11,7 +11,7 @@ function newHistory(userID: string): History {
   };
 }
 
-async function buy(
+async function sell(
   db: firebase.firestore.Firestore,
   userID: string,
   symbol: string,
@@ -29,7 +29,7 @@ async function buy(
   const history = docRef.data();
   const newTransaction: Transaction = {
     symbol: symbol,
-    type: "BUY",
+    type: "SELL",
     amount: amount,
     price: price,
     timestamp: new Date().getUTCMilliseconds(),
@@ -48,26 +48,27 @@ async function buy(
     .then((doc) => {
       const account = doc.data();
       let accountCopy = { ...account };
-      accountCopy.wallets[0].amount -= price * amount;
+      accountCopy.wallets[0].amount += price * amount;
       const checkWalletIndex = accountCopy.wallets.findIndex(
         (item) => item.symbol === symbol
       );
+
+      const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
+      const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
       if (checkWalletIndex < 0) {
         accountCopy.wallets.push({
           symbol: symbol,
-          amount: amount,
-          avgPrice: price,
+          amount: 0,
+          avgPrice: 0,
         });
       } else {
-        const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
-        const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
-        accountCopy.wallets[checkWalletIndex].amount += amount;
+        accountCopy.wallets[checkWalletIndex].amount -= amount;
         accountCopy.wallets[checkWalletIndex].avgPrice =
-          (previousAmount * previousAvgPrice + price * amount) /
+          (previousAmount * previousAvgPrice - price * amount) /
           accountCopy.wallets[checkWalletIndex].amount;
       }
       accountRef.doc(userID).set(accountCopy);
     });
 }
 
-export default buy;
+export default sell;
