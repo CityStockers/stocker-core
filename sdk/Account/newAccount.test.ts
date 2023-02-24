@@ -9,7 +9,7 @@ describe("newAccount", () => {
         {
           symbol: "USD",
           amount: 0,
-          avgPrice: 1,
+          avgPrice: 0,
         },
       ],
     };
