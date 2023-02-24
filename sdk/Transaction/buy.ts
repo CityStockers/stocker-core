@@ -32,7 +32,7 @@ async function buy(
     type: "BUY",
     amount: amount,
     price: price,
-    timestamp: new Date().getUTCMilliseconds(),
+    timestamp: new Date().getTime(),
   };
 
   docRef.ref.update({

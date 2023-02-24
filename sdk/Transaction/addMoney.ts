@@ -34,7 +34,7 @@ async function addMoney(
     type: "ADD",
     amount: amount,
     price: price,
-    timestamp: new Date().getUTCMilliseconds(),
+    timestamp: new Date().getTime(),
   };
 
   docRef.ref.update({
