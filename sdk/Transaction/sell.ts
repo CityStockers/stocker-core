@@ -63,9 +63,13 @@ async function sell(
         });
       } else {
         accountCopy.wallets[checkWalletIndex].amount -= amount;
-        accountCopy.wallets[checkWalletIndex].avgPrice =
-          (previousAmount * previousAvgPrice - price * amount) /
-          accountCopy.wallets[checkWalletIndex].amount;
+        if (accountCopy.wallets[checkWalletIndex].amount > 0) {
+          accountCopy.wallets[checkWalletIndex].avgPrice =
+            (previousAmount * previousAvgPrice - price * amount) /
+            accountCopy.wallets[checkWalletIndex].amount;
+        } else {
+          accountCopy.wallets[checkWalletIndex].avgPrice = 0;
+        }
       }
       accountRef.doc(userID).set(accountCopy);
     });
