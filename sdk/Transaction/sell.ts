@@ -47,31 +47,33 @@ async function sell(
     .get()
     .then((doc) => {
       const account = doc.data();
-      let accountCopy = { ...account };
-      accountCopy.wallets[0].amount += price * amount;
-      const checkWalletIndex = accountCopy.wallets.findIndex(
-        (item) => item.symbol === symbol
-      );
+      if (account && account.userID && account.wallets) {
+        let accountCopy = { ...account };
+        accountCopy.wallets[0].amount += price * amount;
+        const checkWalletIndex = accountCopy.wallets.findIndex(
+          (item) => item.symbol === symbol
+        );
 
-      const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
-      const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
-      if (checkWalletIndex < 0) {
-        accountCopy.wallets.push({
-          symbol: symbol,
-          amount: 0,
-          avgPrice: 0,
-        });
-      } else {
-        accountCopy.wallets[checkWalletIndex].amount -= amount;
-        if (accountCopy.wallets[checkWalletIndex].amount > 0) {
-          accountCopy.wallets[checkWalletIndex].avgPrice =
-            (previousAmount * previousAvgPrice - price * amount) /
-            accountCopy.wallets[checkWalletIndex].amount;
+        const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
+        const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
+        if (checkWalletIndex < 0) {
+          accountCopy.wallets.push({
+            symbol: symbol,
+            amount: 0,
+            avgPrice: 0,
+          });
         } else {
-          accountCopy.wallets[checkWalletIndex].avgPrice = 0;
+          accountCopy.wallets[checkWalletIndex].amount -= amount;
+          if (accountCopy.wallets[checkWalletIndex].amount > 0) {
+            accountCopy.wallets[checkWalletIndex].avgPrice =
+              (previousAmount * previousAvgPrice - price * amount) /
+              accountCopy.wallets[checkWalletIndex].amount;
+          } else {
+            accountCopy.wallets[checkWalletIndex].avgPrice = 0;
+          }
         }
+        accountRef.doc(userID).set(accountCopy);
       }
-      accountRef.doc(userID).set(accountCopy);
     });
 }
 

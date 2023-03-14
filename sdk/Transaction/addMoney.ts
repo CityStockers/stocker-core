@@ -21,12 +21,12 @@ async function addMoney(
     COLLECTION_NAMES.HISTORIES
   ) as firebase.firestore.CollectionReference<History>;
   const snapshot = await historiesRef.where("userID", "==", userID).get();
-  let docRef;
+
   if (snapshot.empty) {
-    docRef = await historiesRef.add(newHistory(userID));
-  } else {
-    docRef = snapshot.docs[0];
+    const docRef = await historiesRef.add(newHistory(userID));
   }
+
+  const docRef = snapshot.docs[0];
 
   const history = docRef.data();
   const newTransaction: Transaction = {

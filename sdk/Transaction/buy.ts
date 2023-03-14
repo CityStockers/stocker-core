@@ -47,26 +47,29 @@ async function buy(
     .get()
     .then((doc) => {
       const account = doc.data();
-      let accountCopy = { ...account };
-      accountCopy.wallets[0].amount -= price * amount;
-      const checkWalletIndex = accountCopy.wallets.findIndex(
-        (item) => item.symbol === symbol
-      );
-      if (checkWalletIndex < 0) {
-        accountCopy.wallets.push({
-          symbol: symbol,
-          amount: amount,
-          avgPrice: price,
-        });
-      } else {
-        const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
-        const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
-        accountCopy.wallets[checkWalletIndex].amount += amount;
-        accountCopy.wallets[checkWalletIndex].avgPrice =
-          (previousAmount * previousAvgPrice + price * amount) /
-          accountCopy.wallets[checkWalletIndex].amount;
+      if (account && account.userID && account.wallets) {
+        let accountCopy = { ...account };
+        accountCopy.wallets[0].amount -= price * amount;
+        const checkWalletIndex = accountCopy.wallets.findIndex(
+          (item) => item.symbol === symbol
+        );
+        if (checkWalletIndex < 0) {
+          accountCopy.wallets.push({
+            symbol: symbol,
+            amount: amount,
+            avgPrice: price,
+          });
+        } else {
+          const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
+          const previousAvgPrice =
+            accountCopy.wallets[checkWalletIndex].avgPrice;
+          accountCopy.wallets[checkWalletIndex].amount += amount;
+          accountCopy.wallets[checkWalletIndex].avgPrice =
+            (previousAmount * previousAvgPrice + price * amount) /
+            accountCopy.wallets[checkWalletIndex].amount;
+        }
+        accountRef.doc(userID).set(accountCopy);
       }
-      accountRef.doc(userID).set(accountCopy);
     });
 }
 
