@@ -39,16 +39,3 @@ function useAccount(db: firebase.firestore.Firestore, userID: string) {
 }
 
 export default useAccount;
-
-// const {account, loading, error} = useAccount(db, userId)
-
-// if(error) {
-//   return <Error>
-// }
-
-// if(loading) {
-//   return <Loading>
-
-// }
-
-// return <Account account={account} />
