@@ -6,7 +6,7 @@ export function newAccount(userID: string): Account {
     wallets: [
       {
         symbol: "USD",
-        amount: 0,
+        amount: 1000,
         avgPrice: 0,
       },
     ],
