@@ -54,8 +54,6 @@ async function sell(
           (item) => item.symbol === symbol
         );
 
-        const previousAmount = accountCopy.wallets[checkWalletIndex].amount;
-        const previousAvgPrice = accountCopy.wallets[checkWalletIndex].avgPrice;
         if (checkWalletIndex < 0) {
           accountCopy.wallets.push({
             symbol: symbol,
@@ -64,11 +62,7 @@ async function sell(
           });
         } else {
           accountCopy.wallets[checkWalletIndex].amount -= amount;
-          if (accountCopy.wallets[checkWalletIndex].amount > 0) {
-            accountCopy.wallets[checkWalletIndex].avgPrice =
-              (previousAmount * previousAvgPrice - price * amount) /
-              accountCopy.wallets[checkWalletIndex].amount;
-          } else {
+          if (accountCopy.wallets[checkWalletIndex].amount === 0) {
             accountCopy.wallets[checkWalletIndex].avgPrice = 0;
           }
         }
